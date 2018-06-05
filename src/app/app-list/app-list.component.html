@@ -1,0 +1,81 @@
+
+<div *ngIf="popup1" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <button (click)="onClose()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 *ngIf="deviceArray.length > 1; else appAlert" class="alert-heading">Please open this page on mobile device to install application!</h4>
+  <ng-template #appAlert>
+    <h4 class="alert-heading">Please check your home screen upon attempting installation</h4>
+  </ng-template>
+</div>
+
+<div class="container">
+  <table class="table table-bordered table-hover table-striped" style="table-layout: fixed; word-wrap: break-word;">
+    <thead class="thead-light">
+      <tr>
+        <th style="width: 55px" scope="col"> </th>
+        <th style="width: 45%" scope="col">File Name</th>
+        <th *ngIf="deviceArray.length > 1" scope="col">Date Created</th>
+        <th *ngIf="deviceArray.length > 1" style="width: 12%" scope="col">Size (MB)</th>
+        <th style="text-align: right; margin-right: 15px;" scope="col">{{ deviceArray.length > 1 ? 'Download' : 'Install'}}<i *ngIf="this.deviceArray[0].deviceType == 'iOS' && this.deviceArray.length == 1" class="fa fa-info-circle" data-toggle="modal" data-target="#modal-1"></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let app of appList">
+        <td>
+          <a 
+            [href]="app.fileLink" installable="true"
+            (click)="onDownload(app)"
+            [ngClass]="{ disabled: app.state === 'installing' }"
+            installable="true"
+            description="">
+            <img 
+              src="{{ app.iconLink }}" 
+              align="center"
+              alt="{{ 'No icon'}}" 
+              style="width:auto; height:35px;">
+          </a>
+        </td>
+        <td>{{ app.fileName }}</td>
+        <td *ngIf="deviceArray.length > 1">{{ app.dateModified }}</td>
+        <td *ngIf="deviceArray.length > 1">{{ app.fileSize }}</td>
+        <td>
+          <a
+            [href]="app.fileLink"
+            class="btn btn-sm red-button"
+            installable="true"
+            description=""
+            role="button"
+            (click)="onDownload(app)"
+            [ngClass]="{ disabled: app.state === 'installing' }"
+            >
+              <b style="font-size: 12px;">{{ deviceArray.length > 1 ? 'Download' : 'Install'}}</b>
+              <i *ngIf="app.state === 'installing'; else buttonEnabled" class="fa fa-spinner fa-spin"></i>
+              <ng-template #buttonEnabled>
+                <i class="fa fa-cloud-download"></i>
+              </ng-template>
+              
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+    <div class="modal fade" id="modal-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    <h4 class="modal-title">Developper Trust Settings</h4>
+                    <button class="close" type="button" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Please do the trust setting before opening the App: Setting - General - Device Management - Qooco Inc - Trust</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" data-dismiss="modal">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,59 @@
+
+.nav-tabs {
+	margin-bottom: 15px;
+}
+
+#headerText2 {
+	font-family: 'Carme', sans-serif;
+	font-size: 20px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+#headerText1 {
+	font-family: 'Carme', sans-serif;
+	font-size: 23px;
+	    text-align: center;
+
+    margin: 10px 0 0px 0;
+    color: #000;
+    display: block;
+}
+
+#downloadRed {
+	color: #EF3E42;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background: #363839;
+}
+
+.fa-android {
+	font-size: 20px;
+    margin-right: 15px;
+    color: #18b518;
+}
+
+.fa-apple {
+	color: #C0C0C0;
+	font-size: 20px;
+    margin-right: 15px;
+}
+
+.fa-cloud-download {
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+.red-button {
+    color:#fff;
+    background-color:#EF3E42;
+    margin-right: 25px;
+}
+
+
+a {
+	color: #000;
+}
+
