@@ -46,10 +46,14 @@ export class AppListComponent implements OnInit {
 			this.appList = data;
 
 			// change extensions for desktop ios ipa list
-			if (this.deviceArray.length > 1 && this.appList[0].fileLink.endsWith('plist')) {
+			if (this.deviceArray[0].length == 1 && this.deviceArray[0].deviceType == 'iOS') {
 				for (var i = 0; i < this.appList.length; i++) {
-					var link = this.appList[i].fileLink.slice(83, -5);
-					this.appList[i].fileLink = link + 'ipa';
+					var plist = this.appList[i].fileLink;
+					plist = plist.replace('http:', 'https:')
+					             .replace('.ipa', '.plist');
+					var link = 'itms-services://?action=download-manifest&amp;url=' + plist;
+
+					this.appList[i].fileLink = link;
 				};
 			}
 

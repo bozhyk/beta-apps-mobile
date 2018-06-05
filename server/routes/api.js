@@ -31,9 +31,9 @@ function readDir(namePath, fileExt, domain, resultCallback) {
 
 				var link = "";
 				if (fileExt === '.ipa') {
-					link = 'itms-services://?action=download-manifest&amp;url=' +
-					       'https://' + domain +
-					       '/data/ios/' + fileName.slice(0, -3) + 'plist';
+					link = //'itms-services://?action=download-manifest&amp;url=' +
+					       'http://' + domain +
+					       '/data/ios/' + fileName;
 				} else if (fileExt == '.apk') {
 					link = '/data/android/' +  fileName;
 				}
