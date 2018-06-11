@@ -4,11 +4,10 @@ const async = require('async');
 const express = require('express');
 const router = express.Router();
 
-
 function getFileSize(filename) {
     var stats = fs.statSync(filename);
     var fileSizeInBytes = stats["size"];
-    return (fileSizeInBytes  / 1000000.0).toFixed(2);
+    return (fileSizeInBytes  / 1048576).toFixed(1);
 }
 
 function readDir(namePath, fileExt, domain, resultCallback) {
@@ -18,6 +17,10 @@ function readDir(namePath, fileExt, domain, resultCallback) {
 
 			var filePath = namePath + fileName;
 			var size = getFileSize(filePath);
+			
+			// Get content from metadata.json
+ 			var contents = JSON.parse(fs.readFileSync(namePath + 'metadata.json'));
+
 			fs.stat(filePath, (err, stats) => {
 
 				if (err) {
@@ -25,29 +28,23 @@ function readDir(namePath, fileExt, domain, resultCallback) {
 				}
 
 				var date = stats["ctime"].toISOString();
-				date = date.replace(/T/, ' ').      // replace T with a space
-							replace(/\..+/, '');
-
-
+				date = date.slice(0, 10);
+				
 				var link = "";
+				var expiration = ""
 				if (fileExt === '.ipa') {
-					link = //'itms-services://?action=download-manifest&amp;url=' +
-					       'http://' + domain +
-					       '/data/ios/' + fileName;
+					link = 'http://' + domain + '/data/ios/' + fileName;
+					expiration = contents[fileName].expiration;
 				} else if (fileExt == '.apk') {
 					link = '/data/android/' +  fileName;
 				}
 
-				var icon = "";
-				if (fileName.indexOf("Qooco") > 0) {
-					icon = namePath + 'icons/QoocoTalk.png';
-				} else if (fileName.indexOf("TalkingPets") > 0) {
-					icon = namePath + 'icons/TalkingPets.png';
-				}
+				var icon = namePath + contents[fileName].icon;
 
 				callback(null, {
 					fileName: fileName,
 					dateModified: date,
+					dateExpired: expiration,
 					fileSize: size,
 					fileLink: link,
 					iconLink: icon
@@ -66,7 +63,6 @@ router.get('/ios-apps', (req, res) => {
 	var iosPath = './data/ios/';
 	var iosExt = '.ipa';
 	var domain = req.headers.host;
-	console.log(domain);
 	readDir(iosPath, iosExt, domain, (results) => {
 		res.send(results);
 	});

@@ -9,20 +9,33 @@
   </ng-template>
 </div>
 
-<div class="container">
-  <table class="table table-bordered table-hover table-striped" style="table-layout: fixed; word-wrap: break-word;">
+<!-- <div class="container-fluid"> -->
+  <table class="table table-hover table-striped" style="table-layout: fixed; word-wrap: break-word;">
     <thead class="thead-light">
       <tr>
-        <th style="width: 55px" scope="col"> </th>
-        <th style="width: 45%" scope="col">File Name</th>
-        <th *ngIf="deviceArray.length > 1" scope="col">Date Created</th>
-        <th *ngIf="deviceArray.length > 1" style="width: 12%" scope="col">Size (MB)</th>
-        <th style="text-align: right; margin-right: 15px;" scope="col">{{ deviceArray.length > 1 ? 'Download' : 'Install'}}<i *ngIf="this.deviceArray[0].deviceType == 'iOS' && this.deviceArray.length == 1" class="fa fa-info-circle" data-toggle="modal" data-target="#modal-1"></i></th>
+        <th id="iconColumn" scope="col"> </th>
+        <th id="fileNameColumn" scope="col">File Name</th>
+        <th class="hideColumn" id="dateCreatedColumn" scope="col">Date Created</th>
+        <th *ngIf="path == '/api/ios-apps'" class="hideColumn" id="expirationColumn" scope="col">Expiration</th>
+
+        <th class="hideColumn" id="sizeColumn" scope="col">Size (MB)</th>
+        <th
+          id="installButton" 
+          class="clickable"
+          data-toggle="modal" 
+          data-target="#modal-1" 
+          scope="col">
+          {{ deviceArray.length > 1 ? 'Download' : 'Install'}}
+          <i 
+            *ngIf="this.deviceArray[0].deviceType == 'iOS' && this.deviceArray.length == 1" 
+            class="fa fa-info-circle">              
+          </i>
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let app of appList">
-        <td>
+        <td id="iconColumn">
           <a 
             [href]="app.fileLink" installable="true"
             (click)="onDownload(app)"
@@ -36,21 +49,25 @@
               style="width:auto; height:35px;">
           </a>
         </td>
-        <td>{{ app.fileName }}</td>
-        <td *ngIf="deviceArray.length > 1">{{ app.dateModified }}</td>
-        <td *ngIf="deviceArray.length > 1">{{ app.fileSize }}</td>
-        <td>
+        <td id="fileNameColumn">{{ app.fileName }}</td>
+        <td class="hideColumn">{{ app.dateModified }}</td> 
+        <td *ngIf="app.expiring == 'disable' && path == '/api/ios-apps'" class="hideColumn">{{ app.dateExpired }}</td>
+        <td *ngIf="app.expiring == 'enable' && path == '/api/ios-apps'" class="hideColumn"><span style='font-weight:bold; color:red'>{{ app.dateExpired }}</span></td>
+
+        <td class="hideColumn">{{ app.fileSize }}</td>
+        <td >
           <a
-            [href]="app.fileLink"
             class="btn btn-sm red-button"
+            id="installColumn"
+            [href]="app.fileLink"
             installable="true"
             description=""
             role="button"
             (click)="onDownload(app)"
-            [ngClass]="{ disabled: app.state === 'installing' }"
+            [ngClass]="{ disabled: app.state === 'installing' && path == '/api/ios-apps' && deviceArray.length == 1|| app.expired}"
             >
               <b style="font-size: 12px;">{{ deviceArray.length > 1 ? 'Download' : 'Install'}}</b>
-              <i *ngIf="app.state === 'installing'; else buttonEnabled" class="fa fa-spinner fa-spin"></i>
+              <i *ngIf="app.state == 'installing' && path == '/api/ios-apps' && deviceArray.length == 1; else buttonEnabled" class="fa fa-spinner fa-spin"></i>
               <ng-template #buttonEnabled>
                 <i class="fa fa-cloud-download"></i>
               </ng-template>
@@ -60,22 +77,23 @@
       </tr>
     </tbody>
   </table>
-</div>
+<!-- </div> -->
 
-    <div class="modal fade" id="modal-1">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    
-                    <h4 class="modal-title">Developper Trust Settings</h4>
-                    <button class="close" type="button" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <p>Please do the trust setting before opening the App: Setting - General - Device Management - Qooco Inc - Trust</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-danger" type="button" data-dismiss="modal">Отмена</button>
-                </div>
-            </div>
-        </div>
+<div class="modal fade" id="modal-1" tabindex="-1" role="dialog" aria-labelledby="modal-1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Developper Trust Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Please do the trust setting before opening the App: Setting - General - Device Management - Qooco Inc - Trust
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+      </div>
     </div>
+  </div>
+</div>

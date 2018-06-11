@@ -40,13 +40,15 @@ export class AppListComponent implements OnInit {
 	ngOnInit() {
 
 		this.deviceArray = this.deviceDetectService.getDeviceArray();
+		const dayOneInMSec = 1000 * 60 * 60 * 24; 
+		const days30InMSec = 30 * dayOneInMSec;
 
 		this._fileListService.getList(this.path)
 		.subscribe((data) => {
 			this.appList = data;
 
 			// change extensions for desktop ios ipa list
-			if (this.deviceArray[0].length == 1 && this.deviceArray[0].deviceType == 'iOS') {
+			if (this.deviceArray.length == 1 && this.deviceArray[0].deviceType == 'iOS') {
 				for (var i = 0; i < this.appList.length; i++) {
 					var plist = this.appList[i].fileLink;
 					plist = plist.replace('http:', 'https:')
@@ -54,12 +56,31 @@ export class AppListComponent implements OnInit {
 					var link = 'itms-services://?action=download-manifest&amp;url=' + plist;
 
 					this.appList[i].fileLink = link;
+
 				};
 			}
 
-			// Bypass url security https://angular.io/guide/security#bypass-security-apis
 			for (var i = 0; i < this.appList.length; i++){
+				// Bypass url security https://angular.io/guide/security#bypass-security-apis
 				this.appList[i].fileLink = this.sanitizer.bypassSecurityTrustUrl(this.appList[i].fileLink);
+				
+				// detect expiring api (less than 30 days)
+				var expirationTime = Math.abs(new Date(this.appList[i].dateExpired).getTime()) - Date.now();
+				if (expirationTime < days30InMSec && expirationTime > 0) {
+					this.appList[i].expiring = "enable";
+					var daysLeft = Math.floor(expirationTime / dayOneInMSec);
+					this.appList[i].dateExpired = this.appList[i].dateExpired +  ' Expiring in ' + daysLeft + ' days';
+				} else if (expirationTime <= 0) { 
+					this.appList[i].expiring = "enable"; 
+					//convert millisecs to days 
+					var daysLeft = Math.abs(Math.floor(expirationTime / (dayOneInMSec))); 
+					this.appList[i].dateExpired = 'Expired';
+					this.appList[i].expired = true;
+				} else {
+					this.appList[i].expiring = "disable";
+					
+				};
+
 			};
 
 

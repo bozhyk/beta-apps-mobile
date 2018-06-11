@@ -1,3 +1,21 @@
+/*.container {
+      padding:50;
+      margin:50;
+    }*/
+
+th { 
+  text-align: center;
+  padding-right: 0; 
+  }
+td { 
+  text-align: center;
+  padding-right: 0;
+  vertical-align:middle; 
+  }
+
+/*a {
+  float: right;
+}*/
 .fa {
     margin-left: 10px;
     font-size: 12px;
@@ -13,27 +31,157 @@
     background-color:#EF3E42;
 }
 
-td {
-	vertical-align:middle;
+.clickable {
+    cursor: pointer;
 }
 
-a {
-	float: right;
+#iconColumn {
+  width: 55px;
+  padding-left: 0;
+      
 }
 
-@media (max-width: 978px) {
-    .container {
-      padding:0;
-      margin:0;
-    }
+#fileNameColumn {
+  width: 60%;
+  text-align: left;
+}
+
+#dateCreatedColumn {
+  width: 130px;
+}
+
+#expirationColumn {
+  width: 140px;
+}
+
+#sizeColumn {
+  width: 100px;
+}
+
+#installColumn {
+  text-align: left; 
+  margin-right: 5px;
+}
+
+#installButton { 
+      width: 125px;
+      /*text-align: left; */
+      margin-right: 5px; 
+    } 
+
+
+
+
+@media screen and (min-width: 568px) and (max-width: 768px) {
+    
 
     body {
       padding:0;
     }
+
+
+    th { 
+      font-size: 12px;
+      text-align: center;
+      padding-right: 0; 
+    }
+    td { 
+      font-size: 12px;
+      text-align: center;
+      padding-right: 0;
+      vertical-align:middle; 
+    } 
 
     .navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
       margin-left: 0;
       margin-right: 0;
       margin-bottom:0;
     }
+    #iconColumn {
+      width: 45px;
+      padding-left: 0;      
+    }
+
+    #fileNameColumn {
+      width: 60%;
+      text-align: left;
+    }
+
+    #dateCreatedColumn {
+      width: 100px;
+    }
+
+    #expirationColumn {
+      width: 90px;
+    }
+
+    #sizeColumn {
+      width: 80px;
+    }
+
+    #installColumn {
+      text-align: left; 
+      margin-right: 5px;
+    }
+
+    #installButton { 
+      width: 95px;
+      text-align: left; 
+      margin-right: 5px; 
+    } 
+}
+
+@media screen and (max-width: 567px) {
+    /*.container {
+      padding:0;
+      margin:0;
+    }*/
+
+    body {
+      padding:0;
+    }
+
+    th {
+      text-align: center; 
+      font-size: 12px;
+      padding-right: 0; 
+    }
+    td {
+      text-align: center; 
+      font-size: 12px;
+      padding-right: 0;
+      vertical-align:middle; 
+    } 
+     
+
+    .navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
+      margin-left: 0;
+      margin-right: 0;
+      margin-bottom:0;
+    }
+    .hideColumn {
+      display:none;
+    }
+
+
+    #iconColumn {
+      width: 45px;
+      padding-left: 0;
+    }
+
+    #fileNameColumn {
+      width: 60%;
+      text-align: left;
+    }
+
+    #installColumn {
+      text-align: left; 
+      margin-right: 5px;
+    }
+
+    #installButton { 
+      width: 90px;
+      text-align: left; 
+      margin-right: 5px; 
+    } 
 }
