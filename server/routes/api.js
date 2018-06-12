@@ -1,5 +1,6 @@
 const fs = require('fs');
 const async = require('async');
+const AdmZip = require('adm-zip');
 
 const express = require('express');
 const router = express.Router();
@@ -17,7 +18,7 @@ function readDir(namePath, fileExt, domain, resultCallback) {
 
 			var filePath = namePath + fileName;
 			var size = getFileSize(filePath);
-			
+
 			// Get content from metadata.json
  			var contents = JSON.parse(fs.readFileSync(namePath + 'metadata.json'));
 
@@ -29,12 +30,33 @@ function readDir(namePath, fileExt, domain, resultCallback) {
 
 				var date = stats["ctime"].toISOString();
 				date = date.slice(0, 10);
-				
+
 				var link = "";
-				var expiration = ""
+				var expirationDate = 'N/A';
+
 				if (fileExt === '.ipa') {
 					link = 'http://' + domain + '/data/ios/' + fileName;
-					expiration = contents[fileName].expiration;
+
+					// DETECT EXPIRATION DATE
+
+					// reading archives
+					var zip = new AdmZip(filePath);
+
+					// an array of apiEntry records
+					var apiEntries = zip.getEntries();
+					apiEntries.forEach(function(zipEntry) {
+						// find embedded.mobileprovision file with expiration date info
+						var fileName = zipEntry.entryName.substring(zipEntry.entryName.lastIndexOf("/") + 1);
+						if (fileName == 'embedded.mobileprovision') {
+							var fileToString = zipEntry.getData().toString('utf8');
+							// find ExpirationDate in file
+							var expirationDateIndex = fileToString.indexOf('ExpirationDate');
+							if (expirationDateIndex > -1) {
+								expirationDate = fileToString.slice(expirationDateIndex + 28, expirationDateIndex + 38);
+							}
+						}
+					});
+
 				} else if (fileExt == '.apk') {
 					link = '/data/android/' +  fileName;
 				}
@@ -44,7 +66,7 @@ function readDir(namePath, fileExt, domain, resultCallback) {
 				callback(null, {
 					fileName: fileName,
 					dateModified: date,
-					dateExpired: expiration,
+					dateExpired: expirationDate,
 					fileSize: size,
 					fileLink: link,
 					iconLink: icon
@@ -63,6 +85,7 @@ router.get('/ios-apps', (req, res) => {
 	var iosPath = './data/ios/';
 	var iosExt = '.ipa';
 	var domain = req.headers.host;
+	console.log(domain);
 	readDir(iosPath, iosExt, domain, (results) => {
 		res.send(results);
 	});
