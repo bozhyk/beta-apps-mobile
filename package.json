@@ -38,10 +38,12 @@
         "concurrently": "^3.5.1",
         "core-js": "^2.4.1",
         "font-awesome": "^4.7.0",
+        "isomorphic-pkg-reader": "git+https://github.com/bozhyk/isomorphic-pkg-reader.git",
         "rxjs": "6.1.0",
         "ts-node": "~3.2.0",
         "tslint": "~5.7.0",
         "typescript": "2.7.2",
+        "uuid": "^3.2.1",
         "zone.js": "^0.8.14"
     },
     "devDependencies": {
