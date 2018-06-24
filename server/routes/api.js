@@ -5,6 +5,8 @@ const router = express.Router();
 const PkgReader = require('isomorphic-pkg-reader');
 const uuid = require('uuid/v4');
 const cgbiToPng = require('cgbi-to-png');
+const QRCode = require('qrcode');
+
 
 function getInfoFromPkg(filePath, webPath, extension, callback) {
 
@@ -19,34 +21,72 @@ function getInfoFromPkg(filePath, webPath, extension, callback) {
 		}
 
 		var iconPath = "." + webPath + "icons/";
+		var qrCodePath = "." + webPath + "qrcode/";
+
 		if (!fs.existsSync(iconPath)){
 			fs.mkdirSync(iconPath);
 		}
+		if (!fs.existsSync(qrCodePath)){
+			fs.mkdirSync(qrCodePath);
+		}
 
-		var expirationDate = null;
-		var pngBuffer = null;
+		var expirationDate = null,
+			pngBuffer = null,
+			bundleId = null;
+			version = null,
+			build = null,
+			team = null;
+
 		if (extension == 'ipa') {
 			if (pkgInfo.mobileProvision) {
 				expirationDate = pkgInfo.mobileProvision.ExpirationDate;
 				if (expirationDate) {
 					expirationDate = expirationDate.toISOString().substring(0, 10);
 				}
+
+				team = pkgInfo.mobileProvision.TeamName;
 			}
 
 			pngBuffer = cgbiToPng.revert(pkgInfo.icon);
+			version = pkgInfo.CFBundleShortVersionString;
+			build = pkgInfo.CFBundleVersion;
+			bundleId = pkgInfo.CFBundleIdentifier;
 		} else {
 			pngBuffer = pkgInfo.icon;
+			version = pkgInfo.versionName;
+			build = pkgInfo.versionCode;
+			bundleId = pkgInfo.package;
 		}
 
-		var iconFullPath = iconPath + uuid() + ".png";
+		var id = uuid();
+		var iconFullPath = iconPath + id + ".png";
+		var qrCodeFullPath = qrCodePath + id + ".png";
+
+		QRCode.toFile(qrCodeFullPath, filePath, {
+			color: {
+			  dark: '#000',  // Blue dots
+			  light: '#0000' // Transparent background
+			}
+		});
 
 		fs.writeFile(iconFullPath, pngBuffer, function () {
 			var result = {
-				icon: iconFullPath.substr(1)
+				bundleId: bundleId,
+				icon: iconFullPath.substr(1),
+				version: version,
+				build: build
 			};
+
+			if (qrCodeFullPath) {
+				result.qrCode = qrCodeFullPath.substr(1);
+			}
 
 			if (expirationDate) {
 				result.expiration = expirationDate;
+			}
+
+			if (team) {
+				result.team = team;
 			}
 
 			callback(null, result);
@@ -79,7 +119,12 @@ function collectAppInfo(filePath, webPath, domain, callback) {
 				dateExpired: info.expiration,
 				fileSize: size,
 				fileLink: webPath + fileName,
-				iconLink: info.icon
+				iconLink: info.icon,
+				qrCode: info.qrCode,
+				version: info.version,
+				build: info.build,
+				bundleId: info.bundleId,
+				team: info.team
 			});
 		});
 	});

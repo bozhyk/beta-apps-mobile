@@ -8,11 +8,15 @@ import { AppComponent } from './app.component';
 import { AppListComponent } from './app-list/app-list.component';
 import { AppListService } from './app-list/app-list.service';
 import { DeviceDetectService } from './app-list/device-detect.service';
+import { AppNavbarComponent } from './app-navbar/app-navbar.component';
+import { AppTabsComponent } from './app-tabs/app-tabs.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppListComponent
+    AppListComponent,
+    AppNavbarComponent,
+    AppTabsComponent
   ],
   imports: [
     BrowserModule,

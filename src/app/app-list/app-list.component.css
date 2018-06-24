@@ -1,3 +1,5 @@
+
+
 /*.container {
       padding:50;
       margin:50;
@@ -13,6 +15,19 @@ td {
   vertical-align:middle; 
   }
 
+ul {
+  list-style-type: none;
+  line-height:200%
+}
+
+/* tr:nth-child(3n) {
+    background-color: #f2f2f2
+} */
+
+table tr:nth-child(4n-1), table tr:nth-child(4n)  {
+  background-color: #F8F8F8;
+}
+
 /*a {
   float: right;
 }*/
@@ -26,10 +41,37 @@ td {
     font-size: 18px;
 }
 
+.fa-code-branch {
+  font-size: 18px;
+}
+
+.fa-chevron-circle-down {
+  font-size: 28px;
+  color:#EF3E42;
+  transition: all 0.8s ease;
+}
+
+.fa-chevron-circle-down:hover {
+  transform: rotateZ(-90deg);
+}
+
+.fa-chevron-circle-up {
+  font-size: 28px;
+  color:#EF3E42;
+  transition: all 0.8s ease;
+}
+
+.fa-chevron-circle-up:hover {
+  transform: rotateZ(90deg);
+}
+
+
 .btn-sm.red-button {
     color:#fff; 
     background-color:#EF3E42;
 }
+
+
 
 .clickable {
     cursor: pointer;
@@ -69,7 +111,14 @@ td {
       margin-right: 5px; 
     } 
 
+@media screen and (min-width: 769px) {
 
+
+  .hideRedButton {
+    display: none;
+  }
+
+}
 
 
 @media screen and (min-width: 568px) and (max-width: 768px) {
@@ -97,6 +146,11 @@ td {
       margin-right: 0;
       margin-bottom:0;
     }
+
+    .hideRedButton {
+      display: none;
+    }
+
     #iconColumn {
       width: 45px;
       padding-left: 0;      

@@ -1,4 +1,4 @@
-.container-fluid {
+  .container-fluid {
       padding-right:150px;
       padding-left:150px;
       margin:0;
@@ -6,23 +6,6 @@
 
 .nav-tabs {
 	margin-bottom: 15px;
-}
-
-#headerText2 {
-	font-family: 'Carme', sans-serif;
-	font-size: 20px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 20px;
-}
-#headerText1 {
-	font-family: 'Carme', sans-serif;
-	font-size: 23px;
-	    text-align: center;
-
-    margin: 10px 0 0px 0;
-    color: #000;
-    display: block;
 }
 
 #downloadRed {
