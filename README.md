@@ -1,6 +1,6 @@
 # Beta-distribution page for mobile apps 
 
-Automatically discovers new .ipa/.apk files in configured directories, extract metadata info and icons
+Automatically discovers new .ipa/.apk files in configured directories, extracts metadata info and icons. Apps can be installed by scanning QR codes on mobile or by opening page in mobile browser.
 
 ![desktop page](docs/Screenshot_desktop.png "Preview")
 
