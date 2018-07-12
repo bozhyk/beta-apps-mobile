@@ -1,41 +1,13 @@
+.container-fluid {
+  padding-right:140px;
+  padding-left:140px;
+  margin:0;
+}
+
 a {
   color: #000;
 }
 
-.container-fluid {
-    padding-right:150px;
-    padding-left:150px;
-    margin:0;
-  }
-
-.nav-tabs {
-  margin-bottom: 15px;
-}
-
-.fa-bars {
+.fa-bars, .fa-times {
   color: #EF3E42;
-}
-
-#headerText1 {
-	font-family: 'Carme', sans-serif;
-	font-size: 23px;
-	    text-align: center;
-
-    margin: 10px 0 0px 0;
-    color: #000;
-    display: block;
-}
-
-
-
-
-
-
-
-@media screen and (max-width: 815px) {
-  .container-fluid {
-    padding-right:10px;
-    padding-left:5px;
-    margin:0;
-  }
 }

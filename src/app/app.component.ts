@@ -7,7 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor() { }
+
+  public _opened: boolean = false;
+  // public sideBarChild;
+  
+
+  // sideBarOn() {
+  //   this._opened = !this._opened;
+  // }
+  public _toggleSidebar() {
+    this._opened = !this._opened;
+    // console.log('sideBarChild = '+this.sideBarChild)
+  }
+
+
+  constructor() {
+    
+  }
 
   ngOnInit() {
   }

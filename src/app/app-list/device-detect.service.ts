@@ -11,11 +11,11 @@ export class DeviceDetectService {
 		var deviceList = [
 			{
 				deviceType: "iOS",
-				apiPath: "/api/ios-apps"
+				apiPath: "api/ios-apps"
 			},
 			{
 				deviceType: "Android",
-				apiPath: "/api/android-apps"
+				apiPath: "api/android-apps"
 			}
 		];
 

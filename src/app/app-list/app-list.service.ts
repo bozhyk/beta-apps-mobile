@@ -11,8 +11,8 @@ export class AppListService {
 
 	getList(apipath): Observable<AppItem[]> {
 		return this.http.get<AppItem[]>(apipath)
-			// .pipe(catchError(this.errorHandler));
-			.pipe(tap(data => console.log('JSON.stringify(data) = ' + JSON.stringify(data))), catchError(this.errorHandler));
+			.pipe(catchError(this.errorHandler));
+			// .pipe(tap(data => console.log('JSON.stringify(data) = ' + JSON.stringify(data))), catchError(this.errorHandler));
 	}
 
 	errorHandler(error: HttpErrorResponse) {

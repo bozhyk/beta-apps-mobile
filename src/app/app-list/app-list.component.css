@@ -1,10 +1,4 @@
 
-
-/*.container {
-      padding:50;
-      margin:50;
-    }*/
-
 th { 
   text-align: center;
   padding-right: 0; 
@@ -20,17 +14,19 @@ ul {
   line-height:200%
 }
 
-/* tr:nth-child(3n) {
-    background-color: #f2f2f2
-} */
-
 table tr:nth-child(4n-1), table tr:nth-child(4n)  {
   background-color: #F8F8F8;
 }
 
-/*a {
-  float: right;
-}*/
+ul.dropdown-menu.show {
+  max-height: 300px;
+  overflow: auto;
+}
+.dropdown-menu {
+  min-width: 50px;
+  text-align: center; 
+}
+
 .fa {
     margin-left: 10px;
     font-size: 12px;
@@ -65,6 +61,10 @@ table tr:nth-child(4n-1), table tr:nth-child(4n)  {
   transform: rotateZ(90deg);
 }
 
+.fa-angle-up {
+  margin-left: 5px;
+
+}
 
 .btn-sm.red-button {
     color:#fff; 
@@ -75,6 +75,81 @@ table tr:nth-child(4n-1), table tr:nth-child(4n)  {
 
 .clickable {
     cursor: pointer;
+}
+
+
+
+/* a#pageNumberButton.page-link {
+  color: #000;
+}
+
+#pageNumberButton {
+  color: #000;
+} */
+
+/* #menu #list {
+  max-height: 0;
+  transition: max-height 0.15s ease-out;
+  overflow: hidden;
+  background: #d5d5d5;
+}
+
+
+
+#menu:hover #list {
+  max-height: 500px;
+  transition: max-height 0.25s ease-in;
+}
+
+#dropdownMenu2 {
+  background-color:#EF3E42;
+} */
+
+.dropbtn {
+  background-color: #EF3E42;
+  color: white;
+  font-size: 16px;
+  padding-left: 17px;
+  padding-right: 17px;
+  height: 37px;
+  border: none;
+}
+
+.dropup {
+  position: relative;
+  display: inline-block;
+}
+
+.dropup-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  /* min-width: 160px; */
+  bottom: 37px;
+  z-index: 1;
+}
+
+.dropup-content a {
+  color: black;
+  padding-left: 30px;
+  padding-right: 30px;
+  /* text-decoration: none; */
+  display: block;
+  text-align: center;
+}
+
+.dropup-content a:hover {background-color: #ccc}
+
+.dropup:hover .dropup-content {
+  display: block;
+}
+
+.dropup:hover .dropbtn {
+  background-color: #495057;
+}
+
+ul, menu, dir {
+  -webkit-padding-start: 0px;
 }
 
 #iconColumn {
@@ -141,6 +216,11 @@ table tr:nth-child(4n-1), table tr:nth-child(4n)  {
       vertical-align:middle; 
     } 
 
+    ul.dropdown-menu.show {
+      max-height:250px;
+      overflow:auto;
+    }
+
     .navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
       margin-left: 0;
       margin-right: 0;
@@ -151,6 +231,17 @@ table tr:nth-child(4n-1), table tr:nth-child(4n)  {
       display: none;
     }
 
+    #dropdownMenu2 {
+      font-size: 12px;
+      
+    }
+
+    #pageNumberButton {
+      font-size: 12px;
+      height: 31px;
+      /* color: #000; */
+    }
+    
     #iconColumn {
       width: 45px;
       padding-left: 0;      
@@ -207,16 +298,33 @@ table tr:nth-child(4n-1), table tr:nth-child(4n)  {
       vertical-align:middle; 
     } 
      
+    ul.dropdown-menu.show {
+      max-height: 300px;
+      overflow: auto;
+    }
 
     .navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
       margin-left: 0;
       margin-right: 0;
       margin-bottom:0;
     }
+
     .hideColumn {
       display:none;
     }
 
+    #dropdownMenu2 {
+      font-size: 12px;
+      
+    }
+    
+    
+    #pageNumberButton {
+      font-size: 12px;
+      height: 31px;
+
+      /* color: #000; */
+    }
 
     #iconColumn {
       width: 45px;

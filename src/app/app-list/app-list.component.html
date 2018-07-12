@@ -1,196 +1,187 @@
 
 <div *ngIf="popup1" class="alert alert-warning alert-dismissible fade show" role="alert">
-  <button (click)="onClose()" type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-  <h4 *ngIf="deviceArray.length > 1; else appAlert" class="alert-heading">Please open this page on mobile device to install application!</h4>
-  <ng-template #appAlert>
-    <h4 class="alert-heading">Please check your home screen upon attempting installation</h4>
-  </ng-template>
+	<button (click)="onClose()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 *ngIf="deviceArray.length > 1; else appAlert" class="alert-heading">Please open this page on mobile device or scan QR code to install application!</h4>
+	<ng-template #appAlert>
+		<h4 class="alert-heading">Please check your home screen upon attempting installation</h4>
+	</ng-template>
 </div>
 
-<!-- <div class="container-fluid"> -->
-  <table class="table table-hover" style="table-layout: fixed; word-wrap: break-word;">
-    <thead class="thead-light">
-      <tr>
-        <th id="iconColumn" scope="col"> </th>
-        <th id="fileNameColumn" scope="col">File Name</th>
-        <th class="hideColumn" id="dateCreatedColumn" scope="col">Date Created</th>
-        <th *ngIf="path == '/api/ios-apps'" class="hideColumn" id="expirationColumn" scope="col">Expiration</th>
 
-        <th class="hideColumn" id="sizeColumn" scope="col">Size (MB)</th>
-        <th
-          id="installButton" 
-          class="clickable"
-          data-toggle="modal" 
-          data-target="#modal-1" 
-          scope="col">
-          {{ deviceArray.length > 1 ? 'Download' : 'Install'}}
-          <i 
-            *ngIf="this.deviceArray[0].deviceType == 'iOS' && this.deviceArray.length == 1" 
-            class="fa fa-info-circle">              
-          </i>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let app of appList">
-        <tr data-toggle="collapse" data-target="#accordion" class="clickable" (click)="onExpand(app)">
-          <td id="iconColumn">
-            <a 
-              [href]="app.fileLink" 
-              installable="true"
-              (click)="onDownload(app)"
-              [ngClass]="{ disabled: app.state === 'installing' }"
-              installable="true"
-              description="">
-              <img 
-                src="{{ app.iconLink }}" 
-                align="center"
-                alt="{{ 'No icon' }}" 
-                style="width:auto; height:35px; border-radius: 20%;">
-            </a>
-          </td>
-          <td id="fileNameColumn">{{ app.fileName }}</td>
-          <td class="hideColumn">{{ app.dateModified }}</td> 
-          <td 
-            *ngIf="app.expiring == 'disable' && path == '/api/ios-apps'" 
-            class="hideColumn">
-            {{ app.dateExpired }}
-          </td>
-          <td 
-            *ngIf="app.expiring == 'enable' && path == '/api/ios-apps'" 
-            class="hideColumn">
-            <span style='font-weight:bold; color:red'>
-              {{ app.dateExpired }}
-            </span>
-          </td>  
-          <td class="hideColumn">{{ app.fileSize }}</td>
-          <td>
-            <i class="hideColumn fa fa-chevron-circle-{{ app.expand ? 'up' : 'down' }}"></i>
-            <a
-              class="btn btn-sm red-button hideRedButton"
-              id="installColumn"
-              [href]="app.fileLink"
-              installable="true"
-              description=""
-              role="button"
-              style="float: left;"
-              (click)="onDownload(app)"
-              [ngClass]="{ disabled: 
-                app.state === 'installing' 
-                && path == '/api/ios-apps' 
-                && deviceArray.length == 1
-                || app.expired}"
-              >
-                <b style="font-size: 12px;">{{ deviceArray.length > 1 ? 'Download' : 'Install'}}</b>
-                <i 
-                  *ngIf="
-                    app.state == 'installing' 
-                    && path == '/api/ios-apps' 
-                    && deviceArray.length == 1; 
-                    else buttonEnabled" 
-                  class="fa fa-spinner fa-spin">
-                </i>
-                <ng-template #buttonEnabled>
-                  <i class="fa fa-cloud-download"></i>
-                </ng-template>                
-            </a>
-            
-          </td>
-        </tr>
-        <tr class="hideColumn">
-          <td [hidden]="!app.expand" colspan="3" style="text-align: left; ">
-            <ul>
-              <li>
-                <i class="fas fa-code-branch"></i>
-                Version: {{ app.version }}
-              </li>
-              <li>
-                <i class="fas fa-first-aid"></i>
-                Build: {{ app.build }}    
-              </li>
-              <li>
-                <i class="far fa-id-card"></i>
-                Bundle ID: {{ app.bundleId }}
-              </li>
-              <li>
-                <i class="fas fa-user-friends"></i>
-                Team: {{ app.team }}
-              </li>
-            </ul>
-            
-            
 
-          </td>
-          <td [hidden]="!app.expand" *ngIf="path == '/api/ios-apps'"></td>
-          <td [hidden]="!app.expand" colspan="2">
-            <a 
-              [href]="app.fileLink" 
-              installable="true"
-              (click)="onDownload(app)"
-              [ngClass]="{ disabled: app.state === 'installing' }"
-              installable="true"
-              description=""
-              style="float: left; text-align: center">
-            
-              <img 
-                src="{{ app.qrCode }}" 
-                align="right"
-                alt="{{ 'No icon' }}" 
-                style="width:auto; height:150px; border-radius: 20%;">
-            </a>
-            <a
-              class="btn btn-sm red-button"
-              id="installColumn"
-              [href]="app.fileLink"
-              installable="true"
-              description=""
-              role="button"
-              style="float: left; margin-left: 30px"
-              (click)="onDownload(app)"
-              [ngClass]="{ disabled: 
-                app.state === 'installing' 
-                && path == '/api/ios-apps' 
-                && deviceArray.length == 1
-                || app.expired}"
-              >
-                <b style="font-size: 12px;">{{ deviceArray.length > 1 ? 'Download' : 'Install'}}</b>
-                <i 
-                  *ngIf="
-                    app.state == 'installing' 
-                    && path == '/api/ios-apps' 
-                    && deviceArray.length == 1; 
-                    else buttonEnabled" 
-                  class="fa fa-spinner fa-spin">
-                </i>
-                <ng-template #buttonEnabled>
-                  <i class="fa fa-cloud-download"></i>
-                </ng-template>                
-            </a>
-          </td>
-        </tr>
-      </ng-container>
-      
-    </tbody>
-  </table>
-<!-- </div> -->
+<table class="table table-hover" style="table-layout: fixed; word-wrap: break-word;">
+	<thead class="thead-light">
+		<tr>
+			<th id="iconColumn" scope="col"> </th>
+			<th id="fileNameColumn" scope="col">File Name</th>
+			<th class="hideColumn" id="dateCreatedColumn" scope="col">Date Created</th>
+			<th class="hideColumn" id="sizeColumn" scope="col">Size (MB)</th>
+			<th
+				id="installButton"
+				class="clickable"
+				data-toggle="modal"
+				data-target="#modal-1"
+				scope="col">
+				{{ deviceArray.length > 1 ? 'Download' : 'Install'}}
+				<i
+					*ngIf="this.deviceArray[0].deviceType == 'iOS' && this.deviceArray.length == 1"
+					class="fa fa-info-circle">
+				</i>
+			</th>
+		</tr>
+	</thead>
+	<tbody 
+		infinite-scroll
+		[infiniteScrollDistance]="scrollDistance"
+		[infiniteScrollThrottle]="throttle"
+		(scrolled)="onScrollDown()">
+		<ng-container *ngFor="let app of appList; let i = index">
+			<ng-container *ngIf="i < this.sum">
+				<tr data-toggle="collapse" data-target="#accordion" class="clickable" (click)="onExpand(app)">
+					<td id="iconColumn">
+						<a
+							[href]="app.fileLink"
+							installable="true"
+							(click)="onDownload(app)"
+							[ngClass]="{ disabled: app.state === 'installing' }"
+							installable="true"
+							description="">
+							<img
+								src="{{ app.iconLink }}"
+								align="center"
+								alt="{{ 'No icon' }}"
+								style="width:auto; height:35px; border-radius: 20%;">
+						</a>
+					</td>
+					<td id="fileNameColumn">{{ app.fileName }}</td>
+					<td class="hideColumn">{{ app.dateModified }}</td>
+					<td class="hideColumn">{{ app.fileSize }}</td>
+					<td>
+						<i class="hideColumn fa fa-chevron-circle-{{ app.expand ? 'up' : 'down' }}"></i>
+						<a
+							class="btn btn-sm red-button hideRedButton"
+							id="installColumn"
+							[href]="app.fileLink"
+							installable="true"
+							description=""
+							role="button"
+							style="float: left;"
+							(click)="onDownload(app)"
+							[ngClass]="{ disabled:
+								app.state === 'installing'
+								&& path == '/api/ios-apps'
+								&& deviceArray.length == 1
+								|| app.expired}"
+							>
+								<b style="font-size: 12px;">{{ deviceArray.length > 1 ? 'Download' : 'Install'}}</b>
+								<i
+									*ngIf="
+										app.state == 'installing'
+										&& path == '/api/ios-apps'
+										&& deviceArray.length == 1;
+										else buttonEnabled"
+									class="fa fa-spinner fa-spin">
+								</i>
+								<ng-template #buttonEnabled>
+									<i class="fa fa-cloud-download"></i>
+								</ng-template>
+						</a>	
+					</td>
+				</tr>
+				<tr class="hideColumn">
+					<td [hidden]="!app.expand" colspan="3" style="text-align: left; ">
+						<ul>
+							<li>
+								<i class="fas fa-code-branch"></i>
+								Version: {{ app.version }}
+							</li>
+							<li>
+								<i class="fas fa-first-aid"></i>
+								Build: {{ app.build }}
+							</li>
+							<li>
+								<i class="far fa-id-card"></i>
+								{{ this.path == 'api/ios-apps' ? 'Bundle' : 'Package' }} ID: {{ app.bundleId }}
+							</li>
+							<li *ngIf="this.path == 'api/ios-apps' && app.team">
+								<i class="fas fa-user-friends"></i>
+								Team: {{ app.team }}
+							</li>
+							<li *ngIf="this.path == 'api/ios-apps' && app.dateExpired">
+								<i class="fas fa-clock"></i>
+								Expiration:  {{ app.dateExpired }}
+							</li>
+						</ul>	
+					</td>
+					<td [hidden]="!app.expand" colspan="2">
+						<a
+							[href]="app.fileLink"
+							installable="true"
+							(click)="onDownload(app)"
+							[ngClass]="{ disabled: app.state === 'installing' }"
+							installable="true"
+							description=""
+							style="float: left; text-align: center">
+	
+							<img
+								src="{{ app.qrCode }}"
+								align="right"
+								alt="{{ 'No icon' }}"
+								style="width:auto; height:150px; border-radius: 20%;">
+						</a>
+						<a
+							class="btn btn-sm red-button"
+							id="installColumn"
+							[href]="app.fileLink"
+							installable="true"
+							description=""
+							role="button"
+							style="float: left; margin-left: 30px"
+							(click)="onDownload(app)"
+							[ngClass]="{ disabled:
+								app.state === 'installing'
+								&& path == '/api/ios-apps'
+								&& deviceArray.length == 1
+								|| app.expired}">
+								<b style="font-size: 12px;">{{ deviceArray.length > 1 ? 'Download' : 'Install'}}</b>
+								<i
+									*ngIf="
+										app.state == 'installing'
+										&& path == '/api/ios-apps'
+										&& deviceArray.length == 1;
+										else buttonEnabled"
+									class="fa fa-spinner fa-spin">
+								</i>
+								<ng-template #buttonEnabled>
+									<i class="fa fa-cloud-download"></i>
+								</ng-template>
+						</a>
+					</td>
+				</tr>
+			</ng-container>					
+		</ng-container>
+	</tbody>
+</table>
 
+
+<!-- Modal info window -->
 <div class="modal fade" id="modal-1" tabindex="-1" role="dialog" aria-labelledby="modal-1" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Developper Trust Settings</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Please do the trust setting before opening the App: Setting - General - Device Management - Qooco Inc - Trust
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-      </div>
-    </div>
-  </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Developper Trust Settings</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Please do the trust setting before opening the App: Setting - General - Device Management - Qooco Inc - Trust
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
 </div>

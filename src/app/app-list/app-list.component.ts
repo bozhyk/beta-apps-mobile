@@ -20,6 +20,16 @@ export class AppListComponent implements OnInit {
 	public popup1 = false;
 	public deviceArray;
 	public expand = false;
+	public pageNumber = 1;
+
+	public sum = 20;
+	public throttle = 300;
+	public scrollDistance = 0.0000000000001;
+
+
+	onScrollDown () {
+		this.sum += 20;
+	}
 
 	onDownload(item: AppItem) {
 		this.popup1 = true;
@@ -37,16 +47,25 @@ export class AppListComponent implements OnInit {
 	}
 
 	onExpand(item: AppItem) {
-		// this.expand = true;;
 		item.expand = !item.expand;
 
 	}
-	
 
-	constructor(private sanitizer: DomSanitizer, private _fileListService: AppListService, private deviceDetectService: DeviceDetectService) { }
+	// onPageChange(pageNmbr) {
+	// 	this.pageNumber += pageNmbr;
+	// }
+
+	// onPageSkip(pageNmr) {
+	// 	this.pageNumber = pageNmr;
+	// }
+
+	constructor(
+		private sanitizer: DomSanitizer,
+		private _fileListService: AppListService,
+		private deviceDetectService: DeviceDetectService) 	{ 	}
 
 	ngOnInit() {
-		
+
 		this.deviceArray = this.deviceDetectService.getDeviceArray();
 		const dayOneInMSec = 1000 * 60 * 60 * 24;
 		const days30InMSec = 30 * dayOneInMSec;
@@ -58,10 +77,7 @@ export class AppListComponent implements OnInit {
 			// change extensions for desktop ios ipa list
 			if (this.deviceArray.length == 1 && this.deviceArray[0].deviceType == 'iOS') {
 				for (var i = 0; i < this.appList.length; i++) {
-					var plist = this.appList[i].fileLink;
-					plist = "https://" + window.location.host + plist.replace('.ipa', '.plist');
-					var link = 'itms-services://?action=download-manifest&amp;url=' + encodeURIComponent(plist);
-					this.appList[i].fileLink = link;
+					this.appList[i].fileLink = this.appList[i].installLink;
 				};
 			}
 

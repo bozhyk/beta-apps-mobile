@@ -1,8 +1,31 @@
+a {
+    color: #000;
+  }
+  /* .demo-sidebar {
+    color: red;
+  
+  } */
+
+li {
+    list-style-type: none;
+}
+
   .container-fluid {
-      padding-right:150px;
-      padding-left:150px;
+      padding-right:140px;
+      padding-left:140px;
       margin:0;
     }
+  
+  .nav-tabs {
+    margin-bottom: 15px;
+  }
+  
+
+  
+  i.fa-times:before{
+    background:transparent;
+}
+
 
 .nav-tabs {
 	margin-bottom: 15px;
@@ -47,7 +70,7 @@ a {
 
 @media screen and (max-width: 815px) {
     .container-fluid {
-      padding-right:10px;
+      padding-right:0;
       padding-left:5px;
       margin:0;
     }

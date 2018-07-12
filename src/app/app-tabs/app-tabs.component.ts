@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DeviceDetectService } from './../app-list/device-detect.service';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: './app-tabs.component.html',
-  styleUrls: ['./app-tabs.component.css']
+	styleUrls: ['./app-tabs.component.css'],
+	inputs: ['list']
 })
 export class AppTabsComponent implements OnInit {
 
+	@Input() public list;
   public deviceArray;
   public currentUrl = new URL(window.location.href);
 	public activeParams = this.currentUrl.searchParams.get("active");
@@ -21,6 +23,7 @@ export class AppTabsComponent implements OnInit {
 			this.activeParams = '';
 		}
 		this.deviceArray = this.deviceDetectService.getDeviceArray();
+
 	}
 
 
