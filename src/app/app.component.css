@@ -21,10 +21,14 @@ li {
   }
   
 
-  
+/*   
   i.fa-times:before{
     background:transparent;
-}
+} */
+.fa-times {
+    color: #EF3E42;
+    font-size: 30px;
+  }
 
 
 .nav-tabs {
@@ -68,10 +72,4 @@ a {
 	color: #000;
 }
 
-@media screen and (max-width: 815px) {
-    .container-fluid {
-      padding-right:0;
-      padding-left:5px;
-      margin:0;
-    }
-}
+

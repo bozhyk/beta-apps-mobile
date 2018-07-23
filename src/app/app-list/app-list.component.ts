@@ -3,6 +3,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { AppListService } from './app-list.service';
 import { DeviceDetectService } from './device-detect.service';
+import { InputContentService } from '../app-navbar/input-content.service';
+
 import { AppItem } from './app-item';
 
 @Component({
@@ -15,7 +17,9 @@ import { AppItem } from './app-item';
 export class AppListComponent implements OnInit {
 
 	@Input() public path;
+	public searchList = [];
 	public appList = [];
+	public list = [];
 	public errorMsg;
 	public popup1 = false;
 	public deviceArray;
@@ -24,7 +28,9 @@ export class AppListComponent implements OnInit {
 
 	public sum = 20;
 	public throttle = 300;
-	public scrollDistance = 0.0000000000001;
+	public scrollDistance = 1;
+
+	input:string;
 
 
 	onScrollDown () {
@@ -51,28 +57,28 @@ export class AppListComponent implements OnInit {
 
 	}
 
-	// onPageChange(pageNmbr) {
-	// 	this.pageNumber += pageNmbr;
-	// }
-
-	// onPageSkip(pageNmr) {
-	// 	this.pageNumber = pageNmr;
-	// }
 
 	constructor(
 		private sanitizer: DomSanitizer,
 		private _fileListService: AppListService,
-		private deviceDetectService: DeviceDetectService) 	{ 	}
+		private deviceDetectService: DeviceDetectService,
+		private data: InputContentService) 	{ 	}
 
 	ngOnInit() {
+
+		
 
 		this.deviceArray = this.deviceDetectService.getDeviceArray();
 		const dayOneInMSec = 1000 * 60 * 60 * 24;
 		const days30InMSec = 30 * dayOneInMSec;
+		// let newInput;
+		
+		let searchIndex = 0;
 
 		this._fileListService.getList(this.path)
 		.subscribe((data) => {
 			this.appList = data;
+			// console.log('this.appList = '+ JSON.stringify(this.appList))
 
 			// change extensions for desktop ios ipa list
 			if (this.deviceArray.length == 1 && this.deviceArray[0].deviceType == 'iOS') {
@@ -80,6 +86,9 @@ export class AppListComponent implements OnInit {
 					this.appList[i].fileLink = this.appList[i].installLink;
 				};
 			}
+
+			
+
 
 			for (var i = 0; i < this.appList.length; i++){
 				// Bypass url security https://angular.io/guide/security#bypass-security-apis
@@ -98,10 +107,38 @@ export class AppListComponent implements OnInit {
 					this.appList[i].expired = true;
 				} else {
 					this.appList[i].expiring = "disable";
-
 				};
+				
 			};
 
+
+			// get search input content and build searched app list
+			this.data.currentInput.subscribe((input) => {
+				this.input = input;
+				
+				if(this.input) {
+				//search for matching file names and save to searchList
+				for (var i = 0; i < this.appList.length; i++){
+						if (this.appList[i].fileName.toLowerCase().includes(this.input.toLowerCase())) {
+							this.searchList[searchIndex] = this.appList[i];
+							searchIndex++;
+						}
+					}
+				}
+				//Detect which list to display:  searched, empty, full
+				if(searchIndex > 0){
+					this.list = [...this.searchList];
+				} else if (this.input && searchIndex == 0) {
+					this.list = [];
+				} else {
+					this.list = [...this.appList];
+				}
+				//destroy search variables upon end of cycle
+				searchIndex = 0;
+				this.searchList = [];
+
+		})
+		
 		}, error => {
 			this.errorMsg = error;
 		});

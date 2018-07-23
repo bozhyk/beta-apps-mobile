@@ -10,7 +10,6 @@
 </div>
 
 
-
 <table class="table table-hover" style="table-layout: fixed; word-wrap: break-word;">
 	<thead class="thead-light">
 		<tr>
@@ -37,7 +36,7 @@
 		[infiniteScrollDistance]="scrollDistance"
 		[infiniteScrollThrottle]="throttle"
 		(scrolled)="onScrollDown()">
-		<ng-container *ngFor="let app of appList; let i = index">
+		<ng-container *ngFor="let app of list; let i = index">
 			<ng-container *ngIf="i < this.sum">
 				<tr data-toggle="collapse" data-target="#accordion" class="clickable" (click)="onExpand(app)">
 					<td id="iconColumn">

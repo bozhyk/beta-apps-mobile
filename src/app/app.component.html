@@ -1,7 +1,7 @@
 <!-- Display content when sidebar is closed -->
 <ng-container *ngIf="_opened == false">     
 
-  <app-app-navbar (childEvent)="_opened=$event" [sideBarStatus] = "_opened"></app-app-navbar>
+  <app-navbar (childEvent)="_opened=$event" [sideBarStatus] = "_opened"></app-navbar>
   
   <router-outlet></router-outlet>
 
@@ -22,7 +22,7 @@
     position = 'right'>
       <div style="background-color: #fff; height: 100%;  padding-right:10px; font-size: 20px; margin-top: 0; padding-top: 10px;">
 
-        <a (click)="_toggleSidebar()" style="float:right; padding-right:10px; margin-right:0"><i class="fas fa-times fa-2x"></i></a>
+        <a (click)="_toggleSidebar()" style="float:right; padding-right:10px; margin-right:0"><i class="fa fa-times"></i></a>
         <br>
         <br>
 
@@ -50,7 +50,7 @@
   <!-- Page content -->
   <div ng-sidebar-content>     
 
-    <app-app-navbar (childEvent)="_opened=$event" [sideBarStatus] = "_opened"></app-app-navbar>
+    <app-navbar (childEvent)="_opened=$event" [sideBarStatus] = "_opened"></app-navbar>
 
     
     <router-outlet></router-outlet>

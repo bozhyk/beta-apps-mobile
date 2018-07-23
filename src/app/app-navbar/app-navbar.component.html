@@ -1,16 +1,37 @@
-<div class="navbar navbar-default navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">
+<div class="container-fluid">
+  <nav id="navi">
+    <a 
+      href="/">
       <img
         src="{{ logoSrc }}"
         width="130"
-        height="40"
-        class="d-inline-block align-top"
+        height="40"              
         alt="http://www.angular.io/"
       >
-    </a>
-    <a (click)="_toggleSidebar()">
+    </a>                 
+    <a 
+      style="float: right"
+      (click)="_toggleSidebar()">
       <i class="fa fa-bars fa-2x"></i>
     </a>
-  </div>
+    <a 
+      style="float: right; padding-right: 20px;">
+      <i *ngIf="!searchOpen" (click)="onSearchOpen()" class="fa fa-search"></i>
+    </a>
+
+    <div *ngIf="searchOpen" class="search">
+      <span class="fa fa-search"></span>
+      <span (click)="onSearchOpen()" class="fa fa-times-circle"></span>
+      <input 
+        [(ngModel)]="input" 
+        (keyup)="onKey(input)" 
+        placeholder="Search Name" 
+        [autofocus]="autoFocus">
+    
+    </div>
+       
+
+  </nav>
 </div>
+
+<br>

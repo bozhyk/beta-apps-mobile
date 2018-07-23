@@ -8,14 +8,18 @@ import { SidebarModule } from 'ng-sidebar';
 
 import { AppComponent } from './app.component';
 import { AppListComponent } from './app-list/app-list.component';
-import { AppListService } from './app-list/app-list.service';
-import { DeviceDetectService } from './app-list/device-detect.service';
+
 import { AppTabsComponent } from './app-tabs/app-tabs.component';
 import { RegisterComponent } from './register/register.component';
+import { AppNavbarComponent } from './app-navbar/app-navbar.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './login/auth.service';
-import { AppNavbarComponent } from './app-navbar/app-navbar.component';
+import { AppListService } from './app-list/app-list.service';
+import { DeviceDetectService } from './app-list/device-detect.service';
+import { InputContentService } from './app-navbar/input-content.service';
+
+
 
 
 @NgModule({
@@ -36,7 +40,7 @@ import { AppNavbarComponent } from './app-navbar/app-navbar.component';
     AppRoutingModule,
     InfiniteScrollModule
   ],
-  providers: [AppListService, DeviceDetectService, AuthService],
+  providers: [AppListService, DeviceDetectService, AuthService, InputContentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
