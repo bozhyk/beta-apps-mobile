@@ -1,6 +1,8 @@
 <div class="container-fluid">
   <nav id="navi">
     <a 
+      *ngIf="this.navWidth > 567 && searchOpen || !searchOpen"
+      id="logo"
       href="/">
       <img
         src="{{ logoSrc }}"
@@ -20,13 +22,9 @@
     </a>
 
     <div *ngIf="searchOpen" class="search">
-      <span class="fa fa-search"></span>
+      <span (click)="newInput(input)" class="fa fa-search"></span>
       <span (click)="onSearchOpen()" class="fa fa-times-circle"></span>
-      <input 
-        [(ngModel)]="input" 
-        (keyup)="onKey(input)" 
-        placeholder="Search Name" 
-        [autofocus]="autoFocus">
+      <input [(ngModel)]="input" (keyup)="onKey(input)" placeholder="Search">
     
     </div>
        
@@ -34,4 +32,4 @@
   </nav>
 </div>
 
-<br>
+<!-- <br> -->

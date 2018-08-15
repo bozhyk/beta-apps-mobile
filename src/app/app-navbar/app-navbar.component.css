@@ -28,11 +28,6 @@ a .fa-search {
   /* padding-right: 20px; */
   
 }
-
-.search .fa-times-circle:hover {
-  color: #EF3E42;
-}
-
 .search .fa-search { 
   position: absolute;
   /* top: 5px; */
@@ -49,24 +44,20 @@ a .fa-search {
   font-size: 16px;
   float: right;
   /* width: 100%;  */
-  display: inline-block; 
-  margin-right: 10px; padding-right: 5px;
+  display: inline-block; margin-right: 10px; padding-right: 5px;
 }
 
 .search input {
   /* margin-top: -5px; */
   /* display: inline-block; */
-  /* text-indent: 40px; */
-  width: 290px;
+  text-indent: 40px;
+  width: 340px;
   height: 32px;
   margin-left: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
 
   background: #e9ecef;
   border: 1px solid #aaa;
   border-radius: 5px;
-  
   /* box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset; */
 }
 
@@ -79,7 +70,7 @@ a .fa-search {
 
 
 #navi {
-  margin: 20px;
+  margin: 20px 20px 10px 10px;
 }
 
 #navi-input {
@@ -105,34 +96,48 @@ a .fa-search {
 }
 
 @media screen and (max-width: 567px) {
+  #navi {
+    margin: 20px 10px 10px 0px;
+  }
+  #logo {
+    padding-left: 10px;
+  }
   .search {
-    position: relative;
+    /* position: relative;
     color: #aaa;
-    font-size: 16px;
-    width: 100%; 
+    font-size: 16px; */
+    /* width: 50%;  */
 
-      float: center;
- /* margin-right: 10px; 
- padding-right: 5px; */
+      float: left;
+ /* margin-right: 0px; 
+  
+ padding-left:0;
+    padding-right:0; */
+    width: 85%;
+ /* padding-right: 5px; */
   }
 
-  .search .fa-search {
+  /* .search .fa-search {
     padding-top: 10px;
    }
 
    .search .fa-times-circle {
     padding-top: 10px;
     right: 4px;
-   }
+   } */
 
   .search input {
-    /* float:center; */
-    margin-top: 10px;
-    /* margin-left: 0px; */
-    /* padding-left:0; */
+    float:left;
+    margin-bottom: 18px;
+    /* margin-top: 10px; */
+     /* margin-left: 0px; */
+    /*margin-right: 0px;
+    padding-left:0;
+    padding-right:0; */
     /* text-align: center; */
     /* text-indent: 40px; */
     width: 100%;
+    /* float: left; */
     /* height: 32px;
     margin-left: 10px;
   

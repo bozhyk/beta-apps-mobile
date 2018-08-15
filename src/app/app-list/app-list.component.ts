@@ -13,7 +13,6 @@ import { AppItem } from './app-item';
 	styleUrls: ['./app-list.component.css'],
 	inputs: ['path']
 })
-
 export class AppListComponent implements OnInit {
 
 	@Input() public path;
@@ -38,6 +37,7 @@ export class AppListComponent implements OnInit {
 	}
 
 	onDownload(item: AppItem) {
+
 		this.popup1 = true;
 		item.state = "installing";
 		//stop fa-spinning when download has begun on blur
@@ -66,13 +66,13 @@ export class AppListComponent implements OnInit {
 
 	ngOnInit() {
 
-		
+
 
 		this.deviceArray = this.deviceDetectService.getDeviceArray();
 		const dayOneInMSec = 1000 * 60 * 60 * 24;
 		const days30InMSec = 30 * dayOneInMSec;
 		// let newInput;
-		
+
 		let searchIndex = 0;
 
 		this._fileListService.getList(this.path)
@@ -87,7 +87,7 @@ export class AppListComponent implements OnInit {
 				};
 			}
 
-			
+
 
 
 			for (var i = 0; i < this.appList.length; i++){
@@ -108,18 +108,18 @@ export class AppListComponent implements OnInit {
 				} else {
 					this.appList[i].expiring = "disable";
 				};
-				
+
 			};
 
 
 			// get search input content and build searched app list
 			this.data.currentInput.subscribe((input) => {
 				this.input = input;
-				
+
 				if(this.input) {
 				//search for matching file names and save to searchList
 				for (var i = 0; i < this.appList.length; i++){
-						if (this.appList[i].fileName.toLowerCase().includes(this.input.toLowerCase())) {
+						if (this.appList[i].fileName.includes(this.input)) {
 							this.searchList[searchIndex] = this.appList[i];
 							searchIndex++;
 						}
@@ -138,7 +138,7 @@ export class AppListComponent implements OnInit {
 				this.searchList = [];
 
 		})
-		
+
 		}, error => {
 			this.errorMsg = error;
 		});
