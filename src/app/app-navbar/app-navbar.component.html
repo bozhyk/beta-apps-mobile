@@ -22,9 +22,13 @@
     </a>
 
     <div *ngIf="searchOpen" class="search">
-      <span (click)="newInput(input)" class="fa fa-search"></span>
+      <span class="fa fa-search"></span>
       <span (click)="onSearchOpen()" class="fa fa-times-circle"></span>
-      <input [(ngModel)]="input" (keyup)="onKey(input)" placeholder="Search">
+      <input 
+        [(ngModel)]="input" 
+        (keyup)="onKey(input)" 
+        placeholder="Search File" 
+        [autofocus]="autoFocus">
     
     </div>
        

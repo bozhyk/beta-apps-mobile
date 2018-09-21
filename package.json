@@ -1,11 +1,12 @@
 {
     "name": "qooco-apps",
-    "version": "0.0.0",
+    "version": "1.1.2",
     "license": "MIT",
     "scripts": {
         "start": "concurrently \"ng serve --host 0.0.0.0 --proxy-config proxy.conf.json\" \"nodemon --watch server server.js\"",
-        "start:prod": "pm2 start pm2.config.json --env production",
-        "start:staging": "cross-env NODE_ENV=staging node server.js",
+        "start:prod": "pm2 start pm2.config.json",
+        "start:staging": "pm2 start pm2.config.json",
+        "start:heroku": "cross-env NODE_ENV=heroku node server.js",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",

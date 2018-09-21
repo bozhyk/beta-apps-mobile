@@ -1,9 +1,9 @@
 {
-	"name" : "qooco-apps",
+	"name" : "apps",
 	"script" : "server.js",
 	"instances": 0,
 	"exec_mode": "cluster",
-	"env_production" : {
+	"env" : {
 		"NODE_ENV": "production"
 	}
 }

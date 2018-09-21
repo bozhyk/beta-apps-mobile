@@ -10,6 +10,8 @@ export interface AppItem {
   build: string;
   bundleId: string;
   team: string;
+  description: string;
+  userGroups: string;
 
   state: string;
   expiring: string;

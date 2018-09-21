@@ -28,6 +28,10 @@ a .fa-search {
   /* padding-right: 20px; */
   
 }
+.search .fa-times-circle:hover {
+  color: #EF3E42;
+}
+
 .search .fa-search { 
   position: absolute;
   /* top: 5px; */
@@ -44,16 +48,20 @@ a .fa-search {
   font-size: 16px;
   float: right;
   /* width: 100%;  */
-  display: inline-block; margin-right: 10px; padding-right: 5px;
+  display: inline-block; 
+  margin-right: 10px; 
+  padding-right: 5px;
 }
 
 .search input {
   /* margin-top: -5px; */
   /* display: inline-block; */
-  text-indent: 40px;
+  /* text-indent: 40px; */
   width: 340px;
   height: 32px;
   margin-left: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
 
   background: #e9ecef;
   border: 1px solid #aaa;
@@ -117,14 +125,6 @@ a .fa-search {
  /* padding-right: 5px; */
   }
 
-  /* .search .fa-search {
-    padding-top: 10px;
-   }
-
-   .search .fa-times-circle {
-    padding-top: 10px;
-    right: 4px;
-   } */
 
   .search input {
     float:left;

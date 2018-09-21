@@ -18,6 +18,7 @@ import { AuthService } from './login/auth.service';
 import { AppListService } from './app-list/app-list.service';
 import { DeviceDetectService } from './app-list/device-detect.service';
 import { InputContentService } from './app-navbar/input-content.service';
+import { SafePipe } from './app-list/safe.pipe';
 
 
 
@@ -29,7 +30,8 @@ import { InputContentService } from './app-navbar/input-content.service';
     AppTabsComponent,
     RegisterComponent,
     LoginComponent,
-    AppNavbarComponent
+    AppNavbarComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,
